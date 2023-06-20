@@ -1,0 +1,1426 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1219815696, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
+  m_Name: Camera_Rotator
+  m_EditorClassIdentifier: 
+  category: Camera
+  fsm:
+    dataVersion: 2
+    usedInTemplate: {fileID: 11400000}
+    name: CameraRotator
+    startState: ' '
+    states:
+    - name: ' '
+      description: 
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 100
+        height: 16
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions: []
+      actionData:
+        actionNames: []
+        customNames: []
+        actionEnabled: 
+        actionIsOpen: 
+        actionStartIndex: 
+        actionHashCodes: 
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams: []
+        fsmIntParams: []
+        fsmBoolParams: []
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams: []
+        byteData: 
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 
+        paramName: []
+        paramDataPos: 
+        paramByteDataSize: 
+    - name: Listener
+      description: 
+      colorIndex: 3
+      position:
+        serializedVersion: 2
+        x: 320
+        y: 208
+        width: 100
+        height: 32
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: FINISHED
+          isSystemEvent: 1
+          isGlobal: 0
+        toState: Listener
+        linkStyle: 0
+        linkConstraint: 0
+        linkTarget: 0
+        colorIndex: 0
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.ActionsInternal.Header
+        - HutongGames.PlayMaker.Actions.GetKey
+        - HutongGames.PlayMaker.Actions.BoolTest
+        - HutongGames.PlayMaker.Actions.GetKey
+        - HutongGames.PlayMaker.Actions.BoolTest
+        - HutongGames.PlayMaker.ActionsInternal.Header
+        - HutongGames.PlayMaker.Actions.GetMouseButton
+        - HutongGames.PlayMaker.Actions.BoolTest
+        - HutongGames.PlayMaker.ActionsInternal.Header
+        - HutongGames.PlayMaker.Actions.Wait
+        customNames:
+        - Keyboard Listeners
+        - 
+        - 
+        - 
+        - 
+        - Mouse Listener
+        - 
+        - 
+        - Loop
+        - 
+        actionEnabled: 01010101010101010101
+        actionIsOpen: 01000000000001010101
+        actionStartIndex: 000000000200000005000000090000000c000000100000001200000014000000180000001a000000
+        actionHashCodes: da209704642ea003a4c8bf00642ea003a4c8bf00da2097041e0d1e00a4c8bf00da20970448c01101
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0.1
+        fsmIntParams: []
+        fsmBoolParams:
+        - useVariable: 1
+          name: buttonStateQ
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: buttonStateQ
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: buttonStateR
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: buttonStateR
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: buttonStateRMB
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: buttonStateRMB
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams:
+        - Waits for the player to press Q or R to rotate with keyboard buttons
+        - ROTATE-LEFT
+        - 
+        - ROTATE-RIGHT
+        - 
+        - '- Waits for the player to press the Right Mouse Button to rotate the camera
+
+          -
+          Checks the current state of the button because ACTIVATE gets called whenever
+          the player hits the rotation boundary
+
+          - If the player is still
+          holding the mouse button, we want to automatically call ROTATE-MOUSE'
+        - ROTATE-MOUSE
+        - 
+        - '- Instead of monitoring the buttons every frame, we set up a loop that
+          checks a bit less frequent to save resources'
+        - FINISHED
+        byteData: 000000007100000000006500000000000000000001000000000000000000
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 03000000000000000700000011000000010000001100000017000000170000000100000007000000110000000100000011000000170000001700000001000000030000000000000007000000110000001100000017000000170000000100000003000000000000000f0000001700000001000000
+        paramName:
+        - comment
+        - colorId
+        - key
+        - storeResult
+        - everyFrame
+        - boolVariable
+        - isTrue
+        - isFalse
+        - everyFrame
+        - key
+        - storeResult
+        - everyFrame
+        - boolVariable
+        - isTrue
+        - isFalse
+        - everyFrame
+        - comment
+        - colorId
+        - button
+        - storeResult
+        - boolVariable
+        - isTrue
+        - isFalse
+        - everyFrame
+        - comment
+        - colorId
+        - time
+        - finishEvent
+        - realTime
+        paramDataPos: 0000000000000000040000000000000008000000010000000100000002000000090000000a000000020000000e0000000300000003000000040000000f0000000500000010000000140000000400000005000000060000000700000018000000080000001900000000000000090000001d000000
+        paramByteDataSize: 0000000004000000040000000000000001000000000000000000000000000000010000000400000000000000010000000000000000000000000000000100000000000000040000000400000000000000000000000000000000000000010000000000000004000000000000000000000001000000
+    - name: R Rotate
+      description: '- Receives ROTATE-RIGHT event from Listener'
+      colorIndex: 1
+      position:
+        serializedVersion: 2
+        x: 720
+        y: 384
+        width: 213.5
+        height: 16
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions: []
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.ActionsInternal.Header
+        - HutongGames.PlayMaker.Actions.FloatAbs
+        - HutongGames.PlayMaker.Actions.Rotate
+        - HutongGames.PlayMaker.ActionsInternal.Header
+        - HutongGames.PlayMaker.Actions.GetKeyUp
+        - HutongGames.PlayMaker.ActionsInternal.Header
+        - HutongGames.PlayMaker.Actions.ClampRotation
+        customNames:
+        - Rotation Direction
+        - 
+        - 
+        - Key Listener
+        - 
+        - Clamp
+        - 
+        actionEnabled: 01010101010101
+        actionIsOpen: 01010000010101
+        actionStartIndex: 0000000002000000040000000e000000100000001300000015000000
+        actionHashCodes: da20970444e7c204b0327400da209704ff77a904da2097047b4c9902
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams:
+        - ownerOption: 0
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
+        - ownerOption: 0
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          enumName: HutongGames.PlayMaker.Actions.ClampRotation+ConstraintAxis
+          intValue: 1
+        fsmFloatParams:
+        - useVariable: 1
+          name: rotSpeed
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 1
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: rotSpeed
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 1
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: rotXmin
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: -30
+        - useVariable: 1
+          name: rotXmax
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 60
+        fsmIntParams: []
+        fsmBoolParams:
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        fsmVector2Params: []
+        fsmVector3Params:
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {x: 0, y: 0, z: 0}
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {x: 0, y: 0, z: 0}
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams:
+        - '- Rotation direction is normal so we must get the absolute value of the
+          rotation speed'
+        - '- Monitor if E is not pressed anymore'
+        - ACTIVATE
+        - '- Clamp Rotation
+
+          - We use X values on the Y axis because that''s
+          how it works, apparently'
+        byteData: 0000000000010000000001000000000000650000000000000001
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 03000000000000000f00000001000000140000001c0000000f0000000f0000000f000000070000000100000001000000010000000100000003000000000000000700000017000000110000000300000000000000140000001c0000002a0000000f0000000f00000001000000
+        paramName:
+        - comment
+        - colorId
+        - floatVariable
+        - everyFrame
+        - gameObject
+        - vector
+        - xAngle
+        - yAngle
+        - zAngle
+        - space
+        - perSecond
+        - everyFrame
+        - lateUpdate
+        - fixedUpdate
+        - comment
+        - colorId
+        - key
+        - sendEvent
+        - storeResult
+        - comment
+        - colorId
+        - gameObject
+        - defaultRotation
+        - constraintAxis
+        - minAngle
+        - maxAngle
+        - everyFrame
+        paramDataPos: 00000000000000000000000004000000000000000000000001000000020000000300000005000000090000000a0000000b0000000c000000010000000d0000001100000002000000000000000300000015000000010000000100000000000000040000000500000019000000
+        paramByteDataSize: 000000000400000000000000010000000000000000000000000000000000000000000000040000000100000001000000010000000100000000000000040000000400000000000000000000000000000004000000000000000000000000000000000000000000000001000000
+    - name: Q Rotate
+      description: '- Receives ROTATE-LEFT event from Listener'
+      colorIndex: 1
+      position:
+        serializedVersion: 2
+        x: 192
+        y: 384
+        width: 205.5
+        height: 16
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions: []
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.ActionsInternal.Header
+        - HutongGames.PlayMaker.Actions.FloatMultiply
+        - HutongGames.PlayMaker.Actions.Rotate
+        - HutongGames.PlayMaker.ActionsInternal.Header
+        - HutongGames.PlayMaker.Actions.GetKeyUp
+        - HutongGames.PlayMaker.ActionsInternal.Header
+        - HutongGames.PlayMaker.Actions.ClampRotation
+        customNames:
+        - Rotation Direction
+        - 
+        - 
+        - Key Listener
+        - 
+        - Clamp
+        - 
+        actionEnabled: 01010101010101
+        actionIsOpen: 01010100000101
+        actionStartIndex: 0000000002000000050000000f000000110000001400000016000000
+        actionHashCodes: da2097049845b305b0327400da209704ff77a904da2097047b4c9902
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams:
+        - ownerOption: 0
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
+        - ownerOption: 0
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          enumName: HutongGames.PlayMaker.Actions.ClampRotation+ConstraintAxis
+          intValue: 1
+        fsmFloatParams:
+        - useVariable: 1
+          name: rotSpeed
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 1
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: -1
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: rotSpeed
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 1
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: rotXmin
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: -30
+        - useVariable: 1
+          name: rotXmax
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 60
+        fsmIntParams: []
+        fsmBoolParams:
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        fsmVector2Params: []
+        fsmVector3Params:
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {x: 0, y: 0, z: 0}
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {x: 0, y: 0, z: 0}
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams:
+        - '- We must invert the rotation direction so it rotates left'
+        - '- Monitor if Q is not pressed anymore'
+        - ACTIVATE
+        - '- Clamp Rotation
+
+          - We use X values on the Y axis because that''s
+          how it works, apparently'
+        byteData: 0000000000010000000001000000000000710000000000000001
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 03000000000000000f0000000f00000001000000140000001c0000000f0000000f0000000f000000070000000100000001000000010000000100000003000000000000000700000017000000110000000300000000000000140000001c0000002a0000000f0000000f00000001000000
+        paramName:
+        - comment
+        - colorId
+        - floatVariable
+        - multiplyBy
+        - everyFrame
+        - gameObject
+        - vector
+        - xAngle
+        - yAngle
+        - zAngle
+        - space
+        - perSecond
+        - everyFrame
+        - lateUpdate
+        - fixedUpdate
+        - comment
+        - colorId
+        - key
+        - sendEvent
+        - storeResult
+        - comment
+        - colorId
+        - gameObject
+        - defaultRotation
+        - constraintAxis
+        - minAngle
+        - maxAngle
+        - everyFrame
+        paramDataPos: 0000000000000000000000000100000004000000000000000000000002000000030000000400000005000000090000000a0000000b0000000c000000010000000d0000001100000002000000000000000300000015000000010000000100000000000000050000000600000019000000
+        paramByteDataSize: 00000000040000000000000000000000010000000000000000000000000000000000000000000000040000000100000001000000010000000100000000000000040000000400000000000000000000000000000004000000000000000000000000000000000000000000000001000000
+    - name: Right Mouse Button Rotate
+      description: '- Receives ROTATE-MOUSE event from Listener'
+      colorIndex: 5
+      position:
+        serializedVersion: 2
+        x: 432
+        y: 384
+        width: 249.5
+        height: 16
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions: []
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.ActionsInternal.Header
+        - HutongGames.PlayMaker.Actions.SetMouseCursor
+        - HutongGames.PlayMaker.ActionsInternal.Header
+        - HutongGames.PlayMaker.Actions.GetMouseButton
+        - HutongGames.PlayMaker.Actions.BoolTest
+        - HutongGames.PlayMaker.ActionsInternal.Header
+        - HutongGames.PlayMaker.Actions.GetRotation
+        - HutongGames.PlayMaker.Actions.GetAxis
+        - HutongGames.PlayMaker.Actions.ClampRotation
+        - HutongGames.PlayMaker.Actions.GetAxis
+        - HutongGames.PlayMaker.Actions.ClampRotation
+        - HutongGames.PlayMaker.Actions.ClampRotation
+        - HutongGames.PlayMaker.Actions.Rotate
+        - HutongGames.PlayMaker.ActionsInternal.Header
+        customNames:
+        - Cursor Handler
+        - Hide and Lock Cursor
+        - Button Test
+        - 
+        - 
+        - Rotate Camera
+        - 
+        - 
+        - 
+        - 
+        - 
+        - 
+        - 
+        - Why not Mouse Look?
+        actionEnabled: 0101010101010101010101010101
+        actionIsOpen: 0101010101010000000000000001
+        actionStartIndex: 00000000020000000500000007000000090000000d0000000f000000170000001c00000022000000270000002d000000330000003d000000
+        actionHashCodes: da209704798f5c04da2097041e0d1e00a4c8bf00da2097046ab4490411839a007b4c990211839a007b4c99027b4c9902b0327400da209704
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams:
+        - ownerOption: 0
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
+        - ownerOption: 0
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
+        - ownerOption: 0
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
+        - ownerOption: 0
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
+        - ownerOption: 0
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: Mouse X
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: Mouse Y
+        fsmObjectParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: 
+          value: {fileID: 0}
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          enumName: HutongGames.PlayMaker.Actions.ClampRotation+ConstraintAxis
+          intValue: 1
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          enumName: HutongGames.PlayMaker.Actions.ClampRotation+ConstraintAxis
+          intValue: 0
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          enumName: HutongGames.PlayMaker.Actions.ClampRotation+ConstraintAxis
+          intValue: 2
+        fsmFloatParams:
+        - useVariable: 1
+          name: xRot
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: yRot
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: rotSensitivity
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 5
+        - useVariable: 1
+          name: Xmove
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: rotXmin
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: -30
+        - useVariable: 1
+          name: rotXmax
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 60
+        - useVariable: 1
+          name: rotSensitivity
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 5
+        - useVariable: 1
+          name: yMove
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: rotYmin
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: rotYmax
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: yMove
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: Xmove
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        fsmIntParams: []
+        fsmBoolParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 1
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 1
+        - useVariable: 1
+          name: buttonStateRMB
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: buttonStateRMB
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        fsmVector2Params: []
+        fsmVector3Params:
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {x: 0, y: 0, z: 0}
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {x: 0, y: 0, z: 0}
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {x: 0, y: 0, z: 0}
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {x: 0, y: 0, z: 0}
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {x: 0, y: 0, z: 0}
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams:
+        - useVariable: 1
+          name: rotation
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {x: 0, y: 0, z: 0, w: 0}
+        stringParams:
+        - '- Hides and locks the mouse cursor'
+        - '- Checks if the right mouse button is pressed
+
+          - Sends ACTIVATE
+          event if it isn''t'
+        - 
+        - ACTIVATE
+        - '- First we get the current rotation
+
+          - Then we get the Mouse
+          X axis and Rotate the Camera according to the Mouse Movement value
+
+          -
+          We clamp the rotation to the min and max set up in the Data
+
+          -
+          We do the same for the Y axis that handles tilting the camear
+
+          -
+          Finally we clamp the Z axis so it never rotates to prevent funny stuff'
+        - '- You might wonder why aren''t we using the Mouse Look action for this
+          part
+
+          - It''s because of negative rotational values - Unity is
+          very dumb when it comes to those
+
+          - Unity converts negative angles
+          into angles between 0 and 360 and Mouse Look always grabs the current rotation
+          to find the new rotation
+
+          - By using the Rotate action, we avoid
+          the conversion and we simply add or subtract the angles from the current
+          value, never actually "setting" the negative values
+
+          - If you
+          use Mouse Look and your camera rotation is at -30, the angle will instantly
+          snap to the max clamped value because Unity will think the angle is 330,
+          since -30 is impossible to have'
+        byteData: 000000000000000001000000010000000000000000010101010101010000000001000000000000
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 03000000000000002100000011000000110000000300000000000000070000001100000011000000170000001700000001000000030000000000000014000000230000001c0000000f0000000f0000000f0000000700000001000000120000000f000000110000000f00000001000000140000001c0000002a0000000f0000000f00000001000000120000000f000000110000000f00000001000000140000001c0000002a0000000f0000000f00000001000000140000001c0000002a0000000f0000000f00000001000000140000001c0000000f0000000f0000000f00000007000000010000000100000001000000010000000300000000000000
+        paramName:
+        - comment
+        - colorId
+        - cursorTexture
+        - hideCursor
+        - lockCursor
+        - comment
+        - colorId
+        - button
+        - storeResult
+        - boolVariable
+        - isTrue
+        - isFalse
+        - everyFrame
+        - comment
+        - colorId
+        - gameObject
+        - quaternion
+        - vector
+        - xAngle
+        - yAngle
+        - zAngle
+        - space
+        - everyFrame
+        - axisName
+        - multiplier
+        - invert
+        - store
+        - everyFrame
+        - gameObject
+        - defaultRotation
+        - constraintAxis
+        - minAngle
+        - maxAngle
+        - everyFrame
+        - axisName
+        - multiplier
+        - invert
+        - store
+        - everyFrame
+        - gameObject
+        - defaultRotation
+        - constraintAxis
+        - minAngle
+        - maxAngle
+        - everyFrame
+        - gameObject
+        - defaultRotation
+        - constraintAxis
+        - minAngle
+        - maxAngle
+        - everyFrame
+        - gameObject
+        - vector
+        - xAngle
+        - yAngle
+        - zAngle
+        - space
+        - perSecond
+        - everyFrame
+        - lateUpdate
+        - fixedUpdate
+        - comment
+        - colorId
+        paramDataPos: 0000000000000000000000000000000001000000010000000400000008000000020000000300000002000000030000000c000000040000000d000000000000000000000000000000000000000100000002000000110000001500000000000000030000000400000004000000160000000100000001000000000000000500000006000000170000000100000007000000050000000800000018000000020000000200000001000000090000000a000000190000000300000003000000020000000b0000000c0000001a00000004000000040000000d0000000e0000000f0000001b0000001f0000002000000021000000220000000500000023000000
+        paramByteDataSize: 000000000400000000000000000000000000000000000000040000000400000000000000000000000000000000000000010000000000000004000000000000000000000000000000000000000000000000000000040000000100000000000000000000000000000000000000010000000000000000000000000000000000000000000000010000000000000000000000000000000000000001000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000004000000010000000100000001000000010000000000000004000000
+    - name: Reset
+      description: '- Receives ACTIVATE event from GAME-START'
+      colorIndex: 3
+      position:
+        serializedVersion: 2
+        x: 272
+        y: 112
+        width: 201
+        height: 32
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: FINISHED
+          isSystemEvent: 1
+          isGlobal: 0
+        toState: Listener
+        linkStyle: 0
+        linkConstraint: 0
+        linkTarget: 0
+        colorIndex: 0
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.ActionsInternal.Header
+        - HutongGames.PlayMaker.Actions.SetMouseCursor
+        - HutongGames.PlayMaker.ActionsInternal.Header
+        - HutongGames.PlayMaker.Actions.FloatAbs
+        - HutongGames.PlayMaker.Actions.NextFrameEvent
+        customNames:
+        - Reset Cursor
+        - Show and unlock cursor
+        - Reset Rotation Direction
+        - 
+        - 
+        actionEnabled: 0101010101
+        actionIsOpen: 0100010101
+        actionStartIndex: 0000000002000000050000000700000009000000
+        actionHashCodes: da209704798f5c04da20970444e7c20488611604
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: 
+          value: {fileID: 0}
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams:
+        - useVariable: 1
+          name: rotSpeed
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 1
+        fsmIntParams: []
+        fsmBoolParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams:
+        - '- Cursor needs to be reset first because ROTATE-MOUSE hides and locks
+          it when called
+
+          - Since all states eventually go back to ACTIVATE,
+          it ensures the cursor will always be reset and won''t accidentally stay
+          hidden and locked'
+        - '- We invert the rotSpeed value when turning left so we must reset it so
+          when we call ROTATE-LEFT again, it inverts normally again'
+        - FINISHED
+        byteData: 000000000000000000
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 030000000000000021000000110000001100000003000000000000000f0000000100000017000000
+        paramName:
+        - comment
+        - colorId
+        - cursorTexture
+        - hideCursor
+        - lockCursor
+        - comment
+        - colorId
+        - floatVariable
+        - everyFrame
+        - sendEvent
+        paramDataPos: 00000000000000000000000000000000010000000100000004000000000000000800000002000000
+        paramByteDataSize: 00000000040000000000000000000000000000000000000004000000000000000100000000000000
+    - name: '     '
+      description: 
+      colorIndex: 6
+      position:
+        serializedVersion: 2
+        x: 544
+        y: 112
+        width: 108
+        height: 16
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions: []
+      actionData:
+        actionNames: []
+        customNames: []
+        actionEnabled: 
+        actionIsOpen: 
+        actionStartIndex: 
+        actionHashCodes: 
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams: []
+        fsmIntParams: []
+        fsmBoolParams: []
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams: []
+        byteData: 
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 
+        paramName: []
+        paramDataPos: 
+        paramByteDataSize: 
+    events:
+    - name: FINISHED
+      isSystemEvent: 1
+      isGlobal: 0
+    - name: ACTIVATE
+      isSystemEvent: 0
+      isGlobal: 1
+    - name: Damp
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: ROTATE-LEFT
+      isSystemEvent: 0
+      isGlobal: 1
+    - name: ROTATE-RIGHT
+      isSystemEvent: 0
+      isGlobal: 1
+    - name: DEACTIVATE
+      isSystemEvent: 0
+      isGlobal: 1
+    - name: ROTATE-MOUSE
+      isSystemEvent: 0
+      isGlobal: 1
+    - name: DampMax
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: DampMin
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: Clamper
+      isSystemEvent: 0
+      isGlobal: 0
+    globalTransitions:
+    - fsmEvent:
+        name: ROTATE-RIGHT
+        isSystemEvent: 0
+        isGlobal: 1
+      toState: R Rotate
+      linkStyle: 0
+      linkConstraint: 0
+      linkTarget: 0
+      colorIndex: 0
+    - fsmEvent:
+        name: ROTATE-LEFT
+        isSystemEvent: 0
+        isGlobal: 1
+      toState: Q Rotate
+      linkStyle: 0
+      linkConstraint: 0
+      linkTarget: 0
+      colorIndex: 0
+    - fsmEvent:
+        name: ACTIVATE
+        isSystemEvent: 0
+        isGlobal: 1
+      toState: Reset
+      linkStyle: 0
+      linkConstraint: 0
+      linkTarget: 0
+      colorIndex: 0
+    - fsmEvent:
+        name: ROTATE-MOUSE
+        isSystemEvent: 0
+        isGlobal: 1
+      toState: Right Mouse Button Rotate
+      linkStyle: 0
+      linkConstraint: 0
+      linkTarget: 0
+      colorIndex: 0
+    - fsmEvent:
+        name: DEACTIVATE
+        isSystemEvent: 0
+        isGlobal: 1
+      toState: '     '
+      linkStyle: 0
+      linkConstraint: 0
+      linkTarget: 0
+      colorIndex: 0
+    variables:
+      floatVariables:
+      - useVariable: 1
+        name: rotSensitivity
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 5
+      - useVariable: 1
+        name: rotSpeed
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 1
+      - useVariable: 1
+        name: rotXmax
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 60
+      - useVariable: 1
+        name: rotXmin
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: -30
+      - useVariable: 1
+        name: rotYmax
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: rotYmin
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: Xmove
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: xRot
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: yMove
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: yRot
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      intVariables: []
+      boolVariables:
+      - useVariable: 1
+        name: buttonStateQ
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: buttonStateR
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: buttonStateRMB
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      stringVariables: []
+      vector2Variables: []
+      vector3Variables: []
+      colorVariables: []
+      rectVariables: []
+      quaternionVariables:
+      - useVariable: 1
+        name: rotation
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: {x: 0, y: 0, z: 0, w: 0}
+      gameObjectVariables: []
+      objectVariables: []
+      materialVariables: []
+      textureVariables: []
+      arrayVariables: []
+      enumVariables: []
+      categories:
+      - 
+      variableCategoryIDs: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    description: Rotates the camera using Q, E and Right Mouse Button
+    docUrl: 
+    showStateLabel: 0
+    maxLoopCount: 0
+    watermark: 
+    password: 
+    locked: 0
+    manualUpdate: 0
+    outVariableIndices: 
+    keepDelayedEventsOnStateExit: 0
+    preprocessed: 0
+    ExposedEvents: []
+    OutputEvents: []
+    RestartOnEnable: 1
+    ResetVariablesOnEnable: 0
+    EnableDebugFlow: 0
+    EnableBreakpoints: 1
+    editorFlags: 225
+    activeStateName: 
+    mouseEvents: 0
+    handleLevelLoaded: 0
+    handleTriggerEnter2D: 0
+    handleTriggerExit2D: 0
+    handleTriggerStay2D: 0
+    handleCollisionEnter2D: 0
+    handleCollisionExit2D: 0
+    handleCollisionStay2D: 0
+    handleTriggerEnter: 0
+    handleTriggerExit: 0
+    handleTriggerStay: 0
+    handleCollisionEnter: 0
+    handleCollisionExit: 0
+    handleCollisionStay: 0
+    handleParticleCollision: 0
+    handleControllerColliderHit: 0
+    handleJointBreak: 0
+    handleJointBreak2D: 0
+    handleOnGUI: 0
+    handleFixedUpdate: 0
+    handleLateUpdate: 0
+    handleApplicationEvents: 0
+    handleUiEvents: 0
+    handleLegacyNetworking: 0
+    handleAnimatorMove: 0
+    handleAnimatorIK: 0
