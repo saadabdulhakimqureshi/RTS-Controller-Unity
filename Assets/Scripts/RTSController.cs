@@ -3,25 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class RTSController : MonoBehaviour
+public class RTSController : MonoBehaviour// This class can be inhertited to any different type of rts unit.
 {
     // Start is called before the first frame update
-    public int health;
-    public int power;
-
+    [Header("References")]
     public Camera mainCamera;
     public NavMeshAgent agent;
     public GameObject healthBar;
     public GameObject muzzleFlash;
+    public GameObject CollisionSphere;
+    public Animator Animator;
+    public Transform bulletSpawnTransform;
 
-    public Animator animator;
+    [Header("Variables")]
+    public int health;
+    public int power;
 
+    
+    // Private Variables
     private bool isMoving = false;
     private bool isShooting = false;
-
+    private bool isNotInRange;
     public GameObject destroying;
+    public RaycastHit enemyHit;
     // Update is called once per frame
-   
+
+    private void Start()
+    {
+        isShooting = false;
+        isMoving = false;
+        isNotInRange = true;
+    }
     void Update()
     {
         CurrentOrders();
@@ -36,25 +48,64 @@ public class RTSController : MonoBehaviour
 
         if (isShooting)
         {
-            //Debug.Log("Shooting");
-            CheckIfDestroyed();
+            //Debug.Log(isNotInRange);
+            if (isNotInRange) { // While the player is moving we stop them only when the destroyable object is within range.
+                CheckIfInRange(); 
+                
+            }
+            else // When the player can shoot at the game object we call the function to lose their health.
+            {
+                DestroyEnemy();
+            }
+
         }
     }
 
-    public void CheckIfReached()
+    public void CheckIfReached()// Checking if the player has reached the destination then stopping him.
     {
         float speed = agent.velocity.magnitude;
-        //Debug.Log("Current Speed: " + speed);
-        animator.SetFloat("walkingSpeed", speed * 0.4f);
+        Animator.SetFloat("walkingSpeed", speed * 0.4f);
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
             isMoving = false;
-            // Agent has stopped moving, stop the animation
             AnimateMovement();   
         }
     }
 
-    public void CheckIfDestroyed()
+    public void CheckIfInRange()// / Checking if the destroyable object is within the player's range.
+    {
+        List<GameObject> rangeList = CollisionSphere.GetComponent<CollisionSphere>().rangeList;
+
+        foreach (GameObject gameObject in rangeList)
+        {
+            if (gameObject == destroying)
+            {
+                //Debug.Log("Koi Milgaya");
+
+                
+                Vector3 direction = enemyHit.point - agent.transform.position;
+                agent.transform.rotation = Quaternion.LookRotation(direction);
+                RaycastHit bulletHit;
+                
+                Vector3 origin = bulletSpawnTransform.position;
+                direction = enemyHit.point - origin;
+                if (Physics.Raycast(origin, direction, out bulletHit))
+                {
+                    if (bulletHit.collider.gameObject == destroying)
+                    {
+                        agent.SetDestination(agent.transform.position);
+                        isMoving = false;
+                        AnimateShooting();
+                        isNotInRange = false;
+                    }                  
+                }
+
+                break;
+            }
+        }
+    }
+
+    public void DestroyEnemy()
     {
         if (destroying != null)
         {
@@ -62,51 +113,50 @@ public class RTSController : MonoBehaviour
         }
         else
         {
-            isShooting = false;
+            StopUnit();
             AnimateShooting();
         }
     }
 
-    public void AnimateMovement()
+    public void AnimateMovement()// Updating player animations.
     {
-        animator.SetBool("isWalking", isMoving);
+        Animator.SetBool("isWalking", isMoving);
     }
 
-    public void AnimateShooting()
+    public void AnimateShooting()// Updating player animations.
     {
         muzzleFlash.SetActive(isShooting);
-        animator.SetBool("isShooting", isShooting);
+        Animator.SetBool("isShooting", isShooting);
     }
 
-    public void EnableHealthBar()
+    public void EnableHealthBar()// When a player is selected we enable the health bar.
     {
         healthBar.SetActive(true);
     }
 
-    public void DisableHealthBar()
+    public void DisableHealthBar()// When a player is deselected we disable the health bar.
     {
         healthBar.SetActive(false);
     }
 
-    public void OrderUnit(bool click = true, string command = "")
+    public void OrderUnit(bool click = true, string command = "")// When a player gives a command we stop the previous command issued to the unit.
     {
+        //Debug.Log("Command");
+        //Debug.Log("Click");
+        StopUnit();
         if (click)
         {
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-
+                //Debug.Log(hit.collider.tag);
                 // Move our agent.
-                if (hit.collider.tag == "Destroyable")
+                if (hit.collider.tag == "Destroyable")// If the player clicks on an destroyable object we issue the attack command.
                 {
                     AttackObject(hit);
                 }
-                else if (hit.collider.tag == "Wall")
-                {
-                    StopUnit();
-                }
-                if (hit.collider.tag == "Ground")
+                if (hit.collider.tag == "Ground")// If the player clicks on a walkable plain we issue the move command.
                 {
                     MoveUnit(hit);
                 }
@@ -126,9 +176,9 @@ public class RTSController : MonoBehaviour
 
     private void MoveUnit(RaycastHit hit)
     {
-        if (agent.SetDestination(hit.point))
+        if (agent.SetDestination(hit.point))// If the hit is a walkable point we move the agent towards that point.
         {
-            Debug.Log("Walking");
+            isNotInRange = true;
             isMoving = true;
             isShooting = false;
             AnimateMovement();
@@ -138,20 +188,61 @@ public class RTSController : MonoBehaviour
 
     private void AttackObject(RaycastHit hit)
     {
-        agent.SetDestination(agent.transform.position);
-        Vector3 direction = hit.point - agent.transform.position;
-        direction.y = 0f;
+        List<GameObject> rangeList = CollisionSphere.GetComponent<CollisionSphere>().rangeList;
 
+        foreach (GameObject gameObject in rangeList)// Checking if the hit point game object is within the player's range.
+        {
+            if (gameObject == hit.collider.gameObject)
+            {
+                
+                agent.SetDestination(agent.transform.position);
+                Vector3 direction = hit.point - agent.transform.position;
+                agent.transform.rotation = Quaternion.LookRotation(direction);
+                RaycastHit bulletHit;
+                Debug.Log(hit.point);
+                Vector3 origin = bulletSpawnTransform.position;
+                direction = hit.point - origin;
+                Debug.Log(direction);
+                if (Physics.Raycast(origin, direction, out bulletHit))// Checking if the player can launch a bullet at the hit point.
+                {
+                    if (bulletHit.collider == hit.collider)// Checking if the bullet actually hits the intended object and not a obstacle in between.
+                    {
+                        Debug.Log("Ray hit object");
 
-        agent.transform.rotation = Quaternion.LookRotation(direction);
-        isShooting = true;
-        AnimateShooting();
+                        isMoving = false;
+                        isShooting = true;
+                        AnimateShooting();
+                        destroying = hit.collider.gameObject;
+                        enemyHit = hit;
+                        isNotInRange = false;
 
-        destroying = hit.collider.gameObject;
+                    }
+                    
+                }
+                break;
+            }
+        }
+
+        if (isNotInRange == true)// If the object is either not within the range or there is an obstacle in between we move the player close.
+        {
+            if (agent.SetDestination(hit.point))
+            {
+                isMoving = true;
+                isShooting = true;
+                AnimateMovement();
+                destroying = hit.collider.gameObject;
+                enemyHit = hit;
+            }
+            
+        }
+
+        
+
     }
 
-    private void StopUnit()
+    private void StopUnit()// Stopping the current command given to player.
     {
+        isNotInRange = true;
         isMoving = false;
         isShooting = false;
         AnimateMovement();

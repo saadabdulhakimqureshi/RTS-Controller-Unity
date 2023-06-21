@@ -12,11 +12,14 @@ public class CameraController : MonoBehaviour
     [Header("Parameters")]
     public float originalSpeed;
     public float movementSpeed;
-    public float movementTime;
+    
     public float fastSpeed;
     public float slowSpeed;
     public float rotationAmount;
+    public float movementTime;
     public Vector3 zoomAmount;
+    public Vector3 maxZoom;
+    public Vector3 minZoom;
 
     [Header("Results")]
     public Vector3 newPosition;
@@ -50,7 +53,7 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         HandleMovementInput();
-        StopMovementInput();
+        
     }
 
     void HandleMovementInput()
@@ -68,97 +71,74 @@ public class CameraController : MonoBehaviour
         {
             newPosition += (transform.forward * movementSpeed);
             transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * movementTime);
+            newPosition = transform.position;
+            movementSpeed = originalSpeed;
         }
 
         if (Input.GetKey(down1) || Input.GetKey(down2))
         {
             newPosition += (transform.forward * -movementSpeed);
             transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * movementTime);
+            newPosition = transform.position;
+            movementSpeed = originalSpeed;
         }
 
         if (Input.GetKey(left1) || Input.GetKey(left2))
         {
             newPosition += (transform.right * -movementSpeed);
             transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * movementTime);
+            newPosition = transform.position;
+            movementSpeed = originalSpeed;
         }
 
         if (Input.GetKey(right1) || Input.GetKey(right2))
         {
             newPosition += (transform.right * movementSpeed);
             transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * movementTime);
-        }
-
-        if (Input.GetKey(rotateLeft))
-        {
-            newRotation.y += rotationAmount;
-            transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * rotationAmount);
+            newPosition = transform.position;
+            movementSpeed = originalSpeed;
         }
 
         if (Input.GetKey(rotateRight))
         {
-            newRotation.y -= rotationAmount;
-            transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * rotationAmount);
+            Vector3 rotation = transform.rotation.eulerAngles;
+
+            // Increase the Y rotation value
+            rotation.y -= rotationAmount * Time.deltaTime;
+
+            // Apply the new rotation
+            transform.rotation = Quaternion.Euler(rotation);
+        }
+
+        if (Input.GetKey(rotateLeft))
+        {
+            // Get the current rotation
+            Vector3 rotation = transform.rotation.eulerAngles;
+
+            // Increase the Y rotation value
+            rotation.y += rotationAmount * Time.deltaTime;
+
+            // Apply the new rotation
+            transform.rotation = Quaternion.Euler(rotation);
         }
 
 
         if (Input.GetKey(zoomOut))
         {
             newZoom += zoomAmount;
-            cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, newZoom, Time.deltaTime * movementTime);
+            if (newZoom.y <= minZoom.y && newZoom.z >= minZoom.z)
+                cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, newZoom, Time.deltaTime * movementTime);
+            newZoom = cameraTransform.localPosition;
         }
         if (Input.GetKey(zoomIn))
         {
+
             newZoom -= zoomAmount;
-            cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, newZoom, Time.deltaTime * movementTime);
-        }
-    }
-
-    void StopMovementInput()
-    {
-        
-        
-        if (Input.GetKeyUp(fastMove))
-        {
-            movementSpeed = originalSpeed;
-        }
-
-        if (Input.GetKeyUp(slowMove))
-        {
-            movementSpeed = originalSpeed;
-        }
-        if (Input.GetKeyUp(up1) || Input.GetKeyUp(up2))
-        {
-            newPosition = transform.position;
-        }
-        if (Input.GetKeyUp(down1) || Input.GetKeyUp(down2))
-        {
-            newPosition = transform.position;
-        }
-        if (Input.GetKeyUp(left1) || Input.GetKeyUp(left2))
-        {
-            newPosition = transform.position;
-        }
-        if (Input.GetKeyUp(right1) || Input.GetKeyUp (right2))
-        {
-            newPosition = transform.position;
-        }
-        if (Input.GetKeyUp(rotateLeft))
-        {
-            newRotation = transform.rotation;
-        }
-        if (Input.GetKeyUp(rotateRight))
-        {
-            newRotation = transform.rotation;
-        }
-        if (Input.GetKeyUp(zoomIn))
-        {
-            newZoom = 
-            cameraTransform.localPosition;
-        }
-        if (Input.GetKeyUp(zoomOut))
-        {
-            newZoom =
-            cameraTransform.localPosition;
+            Debug.Log(newZoom);
+            Debug.Log(maxZoom);
+            if (newZoom.y >= maxZoom.y && newZoom.z <= maxZoom.z)
+                cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, newZoom, Time.deltaTime * movementTime);
+            newZoom = cameraTransform.localPosition;
         }
     }
 }

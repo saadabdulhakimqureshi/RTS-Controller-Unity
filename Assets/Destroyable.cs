@@ -11,8 +11,7 @@ public class Destroyable : MonoBehaviour
     public GameObject Explosion;
     void Start()
     {
-        DontDestroyOnLoad(this);
-        if (!isAlive)
+        if (!isAlive)// Checking if our object has been destroyed.
         {
             Destroy(gameObject);
         }
@@ -24,9 +23,9 @@ public class Destroyable : MonoBehaviour
         
     }
 
-    public void LoseHealth(float power)
+    public void LoseHealth(float power)// When a unit starts attacking the game object it loses it's health.
     {
-        Debug.Log("Here");
+        //Debug.Log("Here");
         if (health > 0)
         {
             health -= power * Time.deltaTime;
@@ -38,7 +37,7 @@ public class Destroyable : MonoBehaviour
         }
     }
 
-    public void CheckIsAlive(Action<bool> destroyed)
+    public void CheckIsAlive(Action<bool> destroyed)// When a unit starts attacking the game object it loses it's health.
     {
         if (health <= 0)
         {
@@ -52,7 +51,7 @@ public class Destroyable : MonoBehaviour
         }
     }
 
-    public void Explode()
+    public void Explode()// When the object loses all of it's health it is destroyed and an explosion occurs.
     {
         Explosion.SetActive(true);
         StartCoroutine(DestroySelf());

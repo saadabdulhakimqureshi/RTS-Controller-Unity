@@ -92,7 +92,7 @@ public class GameController : MonoBehaviour
             }
 
             selectedRTSUnits.Clear();
-            Debug.Log("Start Position: " + startPosition);
+            //Debug.Log("Start Position: " + startPosition);
         }
     }
 
@@ -103,7 +103,7 @@ public class GameController : MonoBehaviour
             endPosition = Input.mousePosition;
 
 
-            Debug.Log("End Position: " + endPosition);
+            //Debug.Log("End Position: " + endPosition);
 
             float minX = Mathf.Min(startPosition.x, endPosition.x);
             float maxX = Mathf.Max(startPosition.x, endPosition.x);
@@ -116,13 +116,10 @@ public class GameController : MonoBehaviour
             {
                 Vector3 worldPosition = rtsUnit.GetComponent<Transform>().position;
                 Vector3 screenPosition = MainCamera.WorldToScreenPoint(worldPosition);
-                //Debug.Log("X: " + screenPosition.x);
-                //Debug.Log("Y: " + screenPosition.y);
                 if (screenPosition.x >= minX && screenPosition.x <= maxX)
                 {
                     if (screenPosition.y >= minY && screenPosition.y <= maxY)
                     {
-                        Debug.Log("Here");
                         RTSController rtsUnitController = rtsUnit.GetComponent<RTSController>();
                         selectedRTSUnits.Add(rtsUnitController);
                         rtsUnitController.EnableHealthBar();
