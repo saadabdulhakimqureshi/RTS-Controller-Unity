@@ -8,12 +8,14 @@ public class RTSController : MonoBehaviour// This class can be inhertited to any
     // Start is called before the first frame update
     [Header("References")]
     public Camera mainCamera;
-    public NavMeshAgent agent;
+    public ObstacleAgent agent;
+    //public NavMeshObstacle Obstacle;
     public GameObject healthBar;
     public GameObject muzzleFlash;
     public GameObject CollisionSphere;
     public Animator Animator;
     public Transform bulletSpawnTransform;
+    public NavMeshSurface surface;
 
     [Header("Variables")]
     public int health;
@@ -63,12 +65,12 @@ public class RTSController : MonoBehaviour// This class can be inhertited to any
 
     public void CheckIfReached()// Checking if the player has reached the destination then stopping him.
     {
-        float speed = agent.velocity.magnitude;
+        float speed = agent.GetSpeed();
         Animator.SetFloat("walkingSpeed", speed * 0.4f);
-        if (agent.remainingDistance <= agent.stoppingDistance)
+        if (agent.Agent.enabled == false)
         {
             isMoving = false;
-            AnimateMovement();   
+            AnimateMovement();
         }
     }
 
@@ -139,50 +141,37 @@ public class RTSController : MonoBehaviour// This class can be inhertited to any
         healthBar.SetActive(false);
     }
 
-    public void OrderUnit(bool click = true, string command = "")// When a player gives a command we stop the previous command issued to the unit.
+    public void OrderUnit(RaycastHit hit, Vector3 moveLocation, string command = "")// When a player gives a command we stop the previous command issued to the unit.
     {
-        //Debug.Log("Command");
-        //Debug.Log("Click");
         StopUnit();
-        if (click)
+
+        if (command ==  "Attack")// If the player clicks on an destroyable object we issue the attack command.
         {
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
-                //Debug.Log(hit.collider.tag);
-                // Move our agent.
-                if (hit.collider.tag == "Destroyable")// If the player clicks on an destroyable object we issue the attack command.
-                {
-                    AttackObject(hit);
-                }
-                if (hit.collider.tag == "Ground")// If the player clicks on a walkable plain we issue the move command.
-                {
-                    MoveUnit(hit);
-                }
-
-
-            }
+            AttackObject(hit);
         }
-        else
+        if (command == "Move")// If the player clicks on a walkable plain we issue the move command.
         {
-            if (command == "Stop")
-            {
-                StopUnit();
-            }
+            MoveUnit(moveLocation);
+        }
+
+        if (command == "Stop")
+        {
+            StopUnit();
+        }
             
-        }
+        
     }
 
-    private void MoveUnit(RaycastHit hit)
+    private void MoveUnit(Vector3 movePosition)
     {
-        if (agent.SetDestination(hit.point))// If the hit is a walkable point we move the agent towards that point.
+        if (agent.SetDestination(movePosition))// If the hit is a walkable point we move the agent towards that point.
         {
+            //surface.BuildNavMesh();
             isNotInRange = true;
             isMoving = true;
             isShooting = false;
             AnimateMovement();
-            AnimateShooting();
+            AnimateShooting(); 
         }
     }
 
@@ -227,6 +216,7 @@ public class RTSController : MonoBehaviour// This class can be inhertited to any
         {
             if (agent.SetDestination(hit.point))
             {
+                //surface.BuildNavMesh();
                 isMoving = true;
                 isShooting = true;
                 AnimateMovement();
@@ -248,5 +238,10 @@ public class RTSController : MonoBehaviour// This class can be inhertited to any
         AnimateMovement();
         AnimateShooting();
         agent.SetDestination(agent.transform.position);
+    }
+
+    public void TakeDamage(float attackDamage)
+    {
+
     }
 }

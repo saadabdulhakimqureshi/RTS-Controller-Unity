@@ -9,6 +9,7 @@ TagManager:
   - Destroyable
   - Ground
   - Wall
+  - Enemy
   layers:
   - Default
   - TransparentFX
