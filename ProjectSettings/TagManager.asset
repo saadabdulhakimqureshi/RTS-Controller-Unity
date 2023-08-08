@@ -10,19 +10,25 @@ TagManager:
   - Ground
   - Wall
   - Enemy
+  - ExplosiveBarrel
+  - BodyPart
+  - Bullet
+  - HealthPickup
+  - Pickup
+  - Cover
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Vision
   - Water
   - UI
   - RTS
   - Walls
   - Destroyable
-  - 
-  - 
-  - 
+  - VisionRay
+  - Cover
+  - Bullet
   - 
   - 
   - 
